@@ -1,2 +1,4 @@
 __pycache__
 ans/
+*.pyc
+.mypy_cache

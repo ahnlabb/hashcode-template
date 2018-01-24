@@ -10,8 +10,11 @@ from util import mkdir
 def process(out, seed):
     sc = score(inp, out)
 
-    with open(args.testcase + '.max', 'r') as f:
-        bsc = int(f.readline())
+    try:
+        with open(args.testcase + '.max', 'r') as f:
+            bsc = int(f.readline())
+    except IOError:
+        bsc = 0
 
     fmt = 'Score: {:<20} Testcase: {}'
     if sc > bsc:
