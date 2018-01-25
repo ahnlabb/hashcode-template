@@ -2,6 +2,7 @@ import random
 import argparse
 import logging as log
 from random import randint as ri
+import funcache
 from score import score
 from util import mkdir
 
@@ -45,6 +46,7 @@ def get_args():
     parser.add_argument('-l', '--log', default='debug')
     parser.add_argument('-s', '--seed', default=None)
     parser.add_argument('-n', '--iterations', default=10)
+    parser.add_argument('--nocache', dest='cache', action='store_const', const=funcache.identity, default=funcache.cached)
     return parser.parse_args()
 
 
