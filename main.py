@@ -1,8 +1,9 @@
-from score import score
 import random
-from random import randint as ri
-import logging as log
 import argparse
+import logging as log
+from random import randint as ri
+from score import score
+from util import mkdir
 
 
 # Runs scoring function and checks if score is improved.
@@ -12,18 +13,20 @@ def process(out, seed):
     with open(args.testcase + '.max', 'r') as f:
         bsc = int(f.readline())
 
+    fmt = 'Score: {:<20} Testcase: {}'
     if sc > bsc:
-        log.critical('New best score {} for testcase {}'.format(sc, args.testcase))
+        log.critical(fmt.format(sc + " BEST", args.testcase))
         fname = '_'.join([args.testcase, str(sc), seed]) + '.ans'
 
         with open(args.testcase + '.max', 'w') as f:
             f.write(str(sc))
 
+        mkdir('ans')
         with open('ans/' + fname, 'w') as f:
             # Print to f
             f.write(str(out))
     else:
-        log.warn('Score: {}'.format(sc))
+        log.warn(fmt.format(sc, args.testcase))
 
 
 def greedy(seed):
@@ -44,7 +47,7 @@ def get_args():
 
 def init_log():
     loglvls = {'debug': log.DEBUG, 'info': log.INFO, 'warning': log.WARNING, 'error': log.ERROR, 'critical': log.CRITICAL}
-    logfmt = '%(relativeCreated)6d %(message)s %(arg.testcase)s'
+    logfmt = '%(relativeCreated)6d %(message)s'
     log.basicConfig(level=loglvls[args.log], format=logfmt)
 
 
